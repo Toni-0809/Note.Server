@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Note_3.Data;
+using Note_3.DTOs;
 using Note_3.Entities;
+using Note_3.Mapper;
 
 namespace Note_3.Controllers
 {
@@ -23,14 +25,14 @@ namespace Note_3.Controllers
 
         // GET: api/Notes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Notes>>> GetNotes()
+        public async Task<ActionResult<IEnumerable<NotesDTO>>> GetNotes()
         {
-            return await _context.Notes.ToListAsync();
+            return await _context.Notes.Select(x=>x.ToNotesDTO()).ToListAsync();
         }
 
         // GET: api/Notes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Notes>> GetNotes(int id)
+        public async Task<ActionResult<NotesDTO>> GetNotes(int id)
         {
             var notes = await _context.Notes.FindAsync(id);
 
@@ -39,49 +41,38 @@ namespace Note_3.Controllers
                 return NotFound();
             }
 
-            return notes;
+            return notes.ToNotesDTO();
         }
 
         // PUT: api/Notes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotes(int id, Notes notes)
+        public async Task<IActionResult> PutNotes(int id, UpdateNotesDTO notes)
         {
-            if (id != notes.Id)
+            var existingCinema = await _context.Notes.FindAsync(id);
+
+            if (existingCinema is null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(notes).State = EntityState.Modified;
+            _context.Entry(existingCinema)
+                     .CurrentValues
+                     .SetValues(notes.ToEntity(id));
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NotesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
-
         // POST: api/Notes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Notes>> PostNotes(Notes notes)
+        public async Task<ActionResult> PostNotes(AddNotesDTO notes)
         {
-            _context.Notes.Add(notes);
+            _context.Notes.Add(notes.ToEntity());
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotes", new { id = notes.Id }, notes);
+            return Ok();
         }
 
         // DELETE: api/Notes/5
@@ -100,9 +91,5 @@ namespace Note_3.Controllers
             return NoContent();
         }
 
-        private bool NotesExists(int id)
-        {
-            return _context.Notes.Any(e => e.Id == id);
-        }
     }
 }

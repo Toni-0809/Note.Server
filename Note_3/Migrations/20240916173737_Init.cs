@@ -21,7 +21,8 @@ namespace Note_3.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NoteList", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "User",
@@ -67,12 +68,14 @@ namespace Note_3.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Notes_NoteListId",
                 table: "Notes",
-                column: "NoteListId");
+                column: "NoteListId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notes_UserId",
                 table: "Notes",
-                column: "UserId");
+                column: "UserId"
+            );
         }
 
         /// <inheritdoc />
