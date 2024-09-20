@@ -21,8 +21,8 @@ namespace Note.App
             }
         }
 
-        private ObservableCollection<NoteEntity> _NoteList2 = new ObservableCollection<NoteEntity>();
-        public ObservableCollection<NoteEntity> NoteList2 { get => _NoteList2; set { _NoteList2 = value; OnPropertyChanged("NoteList2"); } }
+        private ObservableCollection<NoteEntity> _noteList = new ObservableCollection<NoteEntity>();
+        public ObservableCollection<NoteEntity> NoteList { get => _noteList; set { _noteList = value; OnPropertyChanged("NoteList"); } }
 
         private NoteService _noteService;
 
@@ -40,7 +40,7 @@ namespace Note.App
         public MainViewModel(NoteService service)
         {
             _noteService = service;
-            NoteList2 = new ObservableCollection<NoteEntity>(_noteService.GetAll());
+            NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
         }
 
 
@@ -55,7 +55,7 @@ namespace Note.App
                       _noteService.Create(
                           new NoteEntity(Input)
                           );
-                      NoteList2 = new ObservableCollection<NoteEntity>(_noteService.GetAll());
+                      NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
                   }));
             }
         }
@@ -71,7 +71,7 @@ namespace Note.App
                       _noteService.Delete(
                           SelectedNote.ItemId
                           );
-                      NoteList2 = new ObservableCollection<NoteEntity>(_noteService.GetAll());
+                      NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
                   }));
             }
         }
@@ -88,7 +88,7 @@ namespace Note.App
                       _noteService.Update(
                           SelectedNote
                           );
-                      NoteList2 = new ObservableCollection<NoteEntity>(_noteService.GetAll());
+                      NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
                   }));
             }
         }
