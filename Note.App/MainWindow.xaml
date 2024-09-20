@@ -11,6 +11,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        
         <StackPanel 
         Grid.Column="1"
         HorizontalAlignment="Center"
@@ -36,23 +37,23 @@
         VerticalAlignment="Center"
         >
             <TextBox 
-            FontSize="30" 
+            FontSize="60" 
             Background="LightGray"
             Margin="10"
             x:Name="Input"
             Text="{Binding Input}"/>
             <TextBlock 
-            FontSize="30" 
-            Background="LightGreen"
+            FontSize="60" 
+            Background="LightCyan"
             Margin="10"
             x:Name="SelectedFilmTitle"
             Text="{Binding Path=SelectedNote.Title}"/>
             <Button 
             Margin="10 10 10 0"
-            Height="100"
+            Height="50"
             Width="300"
             Content="Добавить"
-            Background="Coral"
+            Background="LightSteelBlue"
             FontSize="30"
             BorderBrush="Transparent"
             x:Name="Add"
@@ -60,26 +61,27 @@
             />
             <Button 
             Margin="10 10 10 0"
-            Height="100"
+            Height="50"
             Width="300"
             Content="Удалить"
-            Background="Red"
+            Background="LightGoldenrodYellow"
             FontSize="30"
-            BorderBrush="Transparent"
+            BorderBrush="LightSlateGray"
             x:Name="Delete"
             Command="{Binding DeleteCommand}"
             />
             <Button 
             Margin="10"
-            Height="100"
+            Height="50"
             Width="300"
             Content="Изменить"
-            Background="Yellow"
+            Background="LightPink"
             FontSize="30"
-            BorderBrush="Transparent"
+            BorderBrush="LightSlateGray"
             x:Name="Edit"
             Command="{Binding EditCommand}"
             />
         </StackPanel>
+        
     </Grid>
 </Window>
