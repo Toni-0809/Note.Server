@@ -1,8 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Note_3.Entities
+﻿namespace Note_3.Entities
 {
     public class Notes
     {
@@ -13,8 +9,8 @@ namespace Note_3.Entities
         public int UserId { get; set; }
         public User? User { get; set; }
 
-        public int NoteListId {  get; set; }
+        public int NoteListId { get; set; }
         public NoteList? NoteList { get; set; }
 
-    } 
+    }
 }

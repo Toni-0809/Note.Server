@@ -1,6 +1,4 @@
-﻿using Note_3.Entities;
-
-namespace Note_3.Entities
+﻿namespace Note_3.Entities
 {
     public class NoteList
 
