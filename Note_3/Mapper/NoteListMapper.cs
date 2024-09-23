@@ -1,9 +1,9 @@
 ﻿using Note_3.DTOs;
 namespace Note_3.Mapper
 {
-    public static class NoteListMapper 
-    { 
-    
+    public static class NoteListMapper
+    {
+
         public static Note_3.Entities.NoteList ToEntity(this AddNoteListDTO game)
         {
             return new Entities.NoteList()

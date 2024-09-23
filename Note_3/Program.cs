@@ -1,5 +1,5 @@
-using Note_3.Data;
 using Microsoft.EntityFrameworkCore;
+using Note_3.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
