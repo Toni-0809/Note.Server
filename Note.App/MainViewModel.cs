@@ -1,6 +1,7 @@
 ﻿using Note.App.Core;
 using Note.Core.Entity;
 using Note.Core.Service;
+using Note_3.DTOs;
 using System.Collections.ObjectModel;
 
 namespace Note.App
@@ -21,13 +22,24 @@ namespace Note.App
             }
         }
 
-        private ObservableCollection<NoteEntity> _noteList = new ObservableCollection<NoteEntity>();
-        public ObservableCollection<NoteEntity> NoteList { get => _noteList; set { _noteList = value; OnPropertyChanged("NoteList"); } }
+        private string _input2 = string.Empty;
+        public string Input2
+        {
+            get => _input2;
+            set
+            {
+                _input2 = value;
+                OnPropertyChanged("Input2");
+            }
+        }
+
+        private ObservableCollection<NotesDTO> _noteList = new ObservableCollection<NotesDTO>();
+        public ObservableCollection<NotesDTO> NoteList { get => _noteList; set { _noteList = value; OnPropertyChanged("NoteList"); } }
 
         private NoteService _noteService;
 
-        private NoteEntity _selectedNote;
-        public NoteEntity SelectedNote
+        private NotesDTO _selectedNote;
+        public NotesDTO SelectedNote
         {
             get => _selectedNote;
             set
@@ -40,25 +52,31 @@ namespace Note.App
         public MainViewModel(NoteService service)
         {
             _noteService = service;
-            NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
+            Task.Run(() => Fetch());
         }
 
+        public async Task Fetch()
+        {
+            NoteList = new ObservableCollection<NotesDTO>(await _noteService.GetAll());
+        }
 
-        private RelayCommand addCommand;
-        public RelayCommand AddCommand
+        private AsyncRelayCommand addCommand;
+        public AsyncRelayCommand AddCommand
         {
             get
             {
-                return addCommand ??
-                  (addCommand = new RelayCommand(obj =>
-                  {
-                      _noteService.Create(
-                          new NoteEntity(Input)
-                          );
-                      NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
-                  }));
+                return addCommand ?? (
+                    addCommand = new AsyncRelayCommand(() => Task.Run(
+                          async () =>
+                          {
+                              await _noteService.Create(new NotesDTO(0, Input, Input2, 1, 1));
+                              await Fetch();
+
+                          }))
+                    );
             }
         }
+
 
         private RelayCommand deleteCommand;
         public RelayCommand DeleteCommand
@@ -69,27 +87,33 @@ namespace Note.App
                   (deleteCommand = new RelayCommand(obj =>
                   {
                       _noteService.Delete(
-                          SelectedNote.ItemId
+                          SelectedNote.Id
                           );
-                      NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
+                      Task.Run(() => Fetch());
                   }));
             }
         }
-
-        private RelayCommand editCommand;
-        public RelayCommand EditCommand
+        private AsyncRelayCommand editCommand;
+        public AsyncRelayCommand EditCommand
         {
             get
             {
                 return editCommand ??
-                  (editCommand = new RelayCommand(obj =>
-                  {
-                      SelectedNote.Title = Input;
-                      _noteService.Update(
-                          SelectedNote
-                          );
-                      NoteList = new ObservableCollection<NoteEntity>(_noteService.GetAll());
-                  }));
+                  (editCommand = new AsyncRelayCommand(() => Task.Run(
+                      async () =>
+                      {
+                          await _notesService.Update(
+                            new UpdateNotesDTO(
+                                0,
+                                Input,
+                                Input2,
+                                1,
+                                1
+                                )
+                            );
+                          await Fetch();
+                      }))
+                  );
             }
         }
 

@@ -21,20 +21,20 @@ namespace Note_3.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NoteList", x => x.Id);
-                }
-            );
+                });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "UserSecurity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Login = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_UserSecurity", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,9 +58,9 @@ namespace Note_3.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Notes_User_UserId",
+                        name: "FK_Notes_UserSecurity_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "UserSecurity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -68,14 +68,12 @@ namespace Note_3.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Notes_NoteListId",
                 table: "Notes",
-                column: "NoteListId"
-            );
+                column: "NoteListId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notes_UserId",
                 table: "Notes",
-                column: "UserId"
-            );
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -88,7 +86,7 @@ namespace Note_3.Migrations
                 name: "NoteList");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "UserSecurity");
         }
     }
 }

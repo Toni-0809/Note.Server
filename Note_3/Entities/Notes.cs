@@ -7,7 +7,7 @@
         public string Entry { get; set; }
 
         public int UserId { get; set; }
-        public User? User { get; set; }
+        public UserSecurity? User { get; set; }
 
         public int NoteListId { get; set; }
         public NoteList? NoteList { get; set; }

@@ -15,7 +15,7 @@ namespace Note_3.Mapper
             };
         }
 
-        public static SecurityResponse ToResponse(this User user)
+        public static SecurityResponse ToResponse(this UserSecurity user)
         {
             return new SecurityResponse(
                 user.Id

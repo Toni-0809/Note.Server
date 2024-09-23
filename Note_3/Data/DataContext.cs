@@ -11,10 +11,9 @@ namespace Note_3.Data
         {
         }
 
-        public DbSet<Entities.Notes> Notes { get; set; }
-        public DbSet<Entities.User> User { get; set; }
-        public DbSet<Entities.NoteList> NoteList { get; set; }
-        public DbSet<Entities.UserSecurity> UserSecurity { get; set; }
+        public DbSet<Notes> Notes { get; set; }
+        public DbSet<NoteList> NoteList { get; set; }
+        public DbSet<UserSecurity> UserSecurity { get; set; }
 
     }
 }

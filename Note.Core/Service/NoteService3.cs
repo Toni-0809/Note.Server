@@ -1,5 +1,6 @@
 ﻿using Note.Core.Data;
 using Note.Core.Entity;
+using Note_3.DTOs;
 
 namespace Note.Core.Service
 {
@@ -8,66 +9,86 @@ namespace Note.Core.Service
     /// </summary>
     public class NoteService
     {
-        private NoteDataSource _dataSource;
+        private NoteRemoteDataSource _dataSource;
         private List<NoteEntity> _notes = new List<NoteEntity>();
-        public NoteService(NoteDataSource dataSource)
+        public NoteService(NoteRemoteDataSource dataSource)
         {
             _dataSource = dataSource;
-            _notes = _dataSource.Get();
+            //_notes = _dataSource.Get();
         }
         /// <summary>
         /// Получить все фильмы
         /// </summary>
         /// <returns></returns>
-        public List<NoteEntity> GetAll()
+        public async Task<List<NotesDTO>> GetAll()
         {
-            return _notes;
+            return await _dataSource.GetNotesList();
         }
         /// <summary>
         /// Получить фильм по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор фильма</param>
         /// <returns>null в случае, если фильм не найден</returns>
-        public NoteEntity Get(int id)
+        public async Task<NotesDTO?> Get(int id)
         {
-            foreach (NoteEntity note in _notes)
-                if (note.ItemId == id)
-                    return note;
+            foreach (NotesDTO notes in await _dataSource.GetNotesList())
+                if (notes.Id == id)
+                    return notes;
             return null;
         }
         /// <summary>
         /// Добавить новый фильм
         /// </summary>
         /// <param name="note"></param>
-        public void Create(NoteEntity note)
+        public async Task Create(NotesDTO notes)
         {
-            _notes.Add(note);
-            _dataSource.Write(_notes);
+            try
+            {
+                await _dataSource.PostNotes(new AddNotesDTO(
+                    notes.Id,
+                    notes.Title,notes.UsersId,
+                    notes.NoteListId,notes.Entry
+                    ));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// Удалить фильм по идентификатору
         /// </summary>
         /// <param name="id"></param>
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            foreach (NoteEntity note in _notes)
-                if (note.ItemId == id)
-                {
-                    _notes.Remove(note);
-                    break;
-                }
-            _dataSource.Write(_notes);
+            try
+            {
+                await _dataSource.DeleteNotes(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
-        /// Обновить фильм
+        /// Обновить песню
         /// </summary>
-        /// <param name="note"></param>
-        public void Update(NoteEntity note)
+        /// <param name="notes"></param>
+        public async Task Update(UpdateNotesDTO notes)
         {
-            for (int i = 0; i < _notes.Count; i++)
-                if (note.ItemId == _notes[i].ItemId)
-                    _notes[i] = note;
-            _dataSource.Write(_notes);
+            try
+            {
+                await _dataSource.PutNotes(new UpdateNotesDTO(
+                                notes.Title,
+                                notes.UserId,
+                                notes.NoteListId,
+                                notes.Entry
+                                ));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

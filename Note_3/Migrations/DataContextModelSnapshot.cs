@@ -60,19 +60,23 @@ namespace Note_3.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("Note_3.Entities.User", b =>
+            modelBuilder.Entity("Note_3.Entities.UserSecurity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("UserSecurity");
                 });
 
             modelBuilder.Entity("Note_3.Entities.Notes", b =>
@@ -83,7 +87,7 @@ namespace Note_3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Note_3.Entities.User", "User")
+                    b.HasOne("Note_3.Entities.UserSecurity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

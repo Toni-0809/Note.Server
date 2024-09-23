@@ -37,13 +37,13 @@
         VerticalAlignment="Center"
         >
             <TextBox 
-            FontSize="60" 
+            FontSize="50" 
             Background="LightGray"
             Margin="10"
             x:Name="Input"
             Text="{Binding Input}"/>
             <TextBlock 
-            FontSize="60" 
+            FontSize="50" 
             Background="LightCyan"
             Margin="10"
             x:Name="SelectedFilmTitle"
