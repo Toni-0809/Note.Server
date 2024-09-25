@@ -16,7 +16,7 @@ namespace Note.Core.Data
 
         public NoteRemoteDataSource()
         {
-            client.BaseAddress = new Uri("http://localhost:5042/");
+            client.BaseAddress = new Uri("http://localhost:5010/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));

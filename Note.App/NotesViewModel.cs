@@ -6,9 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace Note.App
 {
-
-
-    public class MainViewModel : ObservableObject
+    public class NotesViewModel : ObservableObject
     {
 
         private string _input = string.Empty;
@@ -49,7 +47,7 @@ namespace Note.App
             }
         }
 
-        public MainViewModel(NoteService service)
+        public NotesViewModel(NoteService service)
         {
             _noteService = service;
             Task.Run(() => Fetch());
@@ -77,22 +75,22 @@ namespace Note.App
             }
         }
 
-
-        private RelayCommand deleteCommand;
-        public RelayCommand DeleteCommand
+        private AsyncRelayCommand deleteCommand;
+        public AsyncRelayCommand DeleteCommand
         {
             get
             {
-                return deleteCommand ??
-                  (deleteCommand = new RelayCommand(obj =>
-                  {
-                      _noteService.Delete(
-                          SelectedNote.Id
-                          );
-                      Task.Run(() => Fetch());
-                  }));
+                return addCommand ?? (
+                    addCommand = new AsyncRelayCommand(() => Task.Run(
+                          async () =>
+                          {
+                              await _noteService.Delete(SelectedNote.Id);
+                              await Task.Run(() => Fetch());
+                          }))
+                    );
             }
         }
+
         private AsyncRelayCommand editCommand;
         public AsyncRelayCommand EditCommand
         {
@@ -102,13 +100,12 @@ namespace Note.App
                   (editCommand = new AsyncRelayCommand(() => Task.Run(
                       async () =>
                       {
-                          await _notesService.Update(
+                          await _noteService.Update(
                             new UpdateNotesDTO(
-                                0,
                                 Input,
-                                Input2,
                                 1,
-                                1
+                                1,
+                                Input2
                                 )
                             );
                           await Fetch();

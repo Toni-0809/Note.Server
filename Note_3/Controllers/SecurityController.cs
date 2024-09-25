@@ -32,7 +32,7 @@ namespace Note_3.Controllers
             var found = await _context.UserSecurity
             .FirstOrDefaultAsync(p => p.Login == user.Login && p.Password == Encoder.ComputeSHA256Hash(user.Password));
 
-            return found == null ? Ok(found) : BadRequest();
+            return found != null ? Ok(found) : BadRequest();
 
         }
 
