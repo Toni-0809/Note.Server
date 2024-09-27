@@ -11,14 +11,14 @@ namespace Note.Core
             this.securityRemoteDataSource = securityRemoteDataSource;
         }
 
-        public async Task Login(SecurityRequest securityRequest)
+        public async Task<SecurityResponse> Login(SecurityRequest securityRequest)
         {
-            throw new NotImplementedException();
+            return await securityRemoteDataSource.Login(securityRequest);
         }
 
         public async Task Register(SecurityRequest securityRequest)
         {
-            throw new NotImplementedException();
+            await securityRemoteDataSource.Register(securityRequest);
         }
     }
 }

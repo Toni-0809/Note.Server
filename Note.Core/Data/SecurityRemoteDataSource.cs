@@ -1,5 +1,6 @@
 ﻿using Note.Core.Utility;
 using Note_3.DTOs;
+using Note_3.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,31 +24,61 @@ namespace Note.Core
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
+        //        public async Task<SecurityResponse> GetRespons(int id)
+        //        {
+        //            SecurityResponse security_response = null;
 
+        //            HttpResponseMessage response = await client.GetAsync($"api/Respons/{id}");
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                security_response = DataSerializer.Deserialize<SecurityResponse>(
+        //                   await response.Content.ReadAsStringAsync());
+        //            }
+        //            return security_response;
+        //        }
 
-        public async Task<SecurityResponse> GetNotes(int id)
-        {
-            SecurityResponse notes = null;
+        //        public async Task<List<SecurityResponse>> GetRespons()
+        //        {
 
-            HttpResponseMessage response = await client.GetAsync($"api/Notes/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                notes = DataSerializer.Deserialize<SecurityResponse>(
-                   await response.Content.ReadAsStringAsync());
-            }
-            return notes;
-        }
+        //            HttpResponseMessage response = await client.GetAsync(
+        //                "api/Respons");
+        //            response.EnsureSuccessStatusCode();
 
+        //            List<SecurityResponse> security_response = new List<SecurityResponse>();
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                security_response = DataSerializer.Deserialize<List<SecurityResponse>>(
+        //                    await response.Content.ReadAsStringAsync());
+        //            }
+        //            return security_response;
+        //        }
+        //    }
+        //}
 
-        public async Task PostNotes(SecurityResponse SecurityRequest)
+        public async Task<SecurityResponse> Login(SecurityRequest request)
         {
             HttpResponseMessage response = await client.PostAsync(
-                ("api/Notes"), JsonContent.Create(SecurityRequest));
+                ("api/Security/login"), JsonContent.Create(request));
+
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Добавление завершилось с ошибкой!");
+                throw new Exception("Регистрация завершилась с ошибкой!");
+            }SecurityResponse security = DataSerializer.Deserialize<SecurityResponse>(
+                    await response.Content.ReadAsStringAsync())!;
+            return security;
+        }
+
+        public async Task Register(SecurityRequest request)
+        {
+            HttpResponseMessage response = await client.PostAsync(
+                ("api/Security/register"), JsonContent.Create(request));
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Вход завершился с ошибкой!");
             }
+            
             return;
         }
     }

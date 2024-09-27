@@ -51,7 +51,7 @@ namespace Note.App
                           }))
                     );
             }
-        }\
+        }
 
         private AsyncRelayCommand loginCommand;
         public AsyncRelayCommand LoginCommand

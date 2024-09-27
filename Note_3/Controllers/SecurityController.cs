@@ -19,7 +19,7 @@ namespace Note_3.Controllers
         }
 
         [HttpPost("/register")]
-        public async Task<ActionResult<SecurityResponse>> Register(SecurityRequest user)
+        public async Task<ActionResult> Register(SecurityRequest user)
         {
             _context.UserSecurity.Add(user.ToEntity());
             await _context.SaveChangesAsync();
