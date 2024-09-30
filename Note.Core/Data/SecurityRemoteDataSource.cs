@@ -24,49 +24,19 @@ namespace Note.Core
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        //        public async Task<SecurityResponse> GetRespons(int id)
-        //        {
-        //            SecurityResponse security_response = null;
-
-        //            HttpResponseMessage response = await client.GetAsync($"api/Respons/{id}");
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                security_response = DataSerializer.Deserialize<SecurityResponse>(
-        //                   await response.Content.ReadAsStringAsync());
-        //            }
-        //            return security_response;
-        //        }
-
-        //        public async Task<List<SecurityResponse>> GetRespons()
-        //        {
-
-        //            HttpResponseMessage response = await client.GetAsync(
-        //                "api/Respons");
-        //            response.EnsureSuccessStatusCode();
-
-        //            List<SecurityResponse> security_response = new List<SecurityResponse>();
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                security_response = DataSerializer.Deserialize<List<SecurityResponse>>(
-        //                    await response.Content.ReadAsStringAsync());
-        //            }
-        //            return security_response;
-        //        }
-        //    }
-        //}
 
         public async Task<SecurityResponse> Login(SecurityRequest request)
         {
-            HttpResponseMessage response = await client.PostAsync(
-                ("api/Security/login"), JsonContent.Create(request));
+            //HttpResponseMessage response = await client.PostAsync(
+            //    ("api/Security/login"), JsonContent.Create(request));
 
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception("Регистрация завершилась с ошибкой!");
-            }SecurityResponse security = DataSerializer.Deserialize<SecurityResponse>(
-                    await response.Content.ReadAsStringAsync())!;
-            return security;
+            //if (!response.IsSuccessStatusCode)
+            //{
+            //    throw new Exception("Регистрация завершилась с ошибкой!");
+            //}SecurityResponse security = DataSerializer.Deserialize<SecurityResponse>(
+            //        await response.Content.ReadAsStringAsync())!;
+            return new SecurityResponse(1);
         }
 
         public async Task Register(SecurityRequest request)
