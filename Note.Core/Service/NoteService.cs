@@ -5,8 +5,7 @@ using Note_3.DTOs;
 namespace Note.Core.Service
 {
     /// <summary>
-    /// Класс, осуществляющий работу с фильмами 
-    /// </summary>
+    /// Класс, осуществляющий работу/// </summary>
     public class NoteService
     {
         private NoteRemoteDataSource _dataSource;
@@ -17,7 +16,7 @@ namespace Note.Core.Service
             //_notes = _dataSource.Get();
         }
         /// <summary>
-        /// Получить все фильмы
+        /// Получить все
         /// </summary>
         /// <returns></returns>
         public async Task<List<NotesDTO>> GetAll()
@@ -25,10 +24,10 @@ namespace Note.Core.Service
             return await _dataSource.GetNotesList();
         }
         /// <summary>
-        /// Получить фильм по идентификатору
+        /// Получить по идентификатору
         /// </summary>
-        /// <param name="id">Идентификатор фильма</param>
-        /// <returns>null в случае, если фильм не найден</returns>
+        /// <param name="id">Идентификатор </param>
+        /// <returns>null в случае, если не найдено</returns>
         public async Task<NotesDTO?> Get(int id)
         {
             foreach (NotesDTO notes in await _dataSource.GetNotesList())
@@ -37,7 +36,7 @@ namespace Note.Core.Service
             return null;
         }
         /// <summary>
-        /// Добавить новый фильм
+        /// Добавить новую
         /// </summary>
         /// <param name="note"></param>
         public async Task Create(NotesDTO notes)
@@ -56,7 +55,7 @@ namespace Note.Core.Service
             }
         }
         /// <summary>
-        /// Удалить фильм по идентификатору
+        /// Удалить по идентификатору
         /// </summary>
         /// <param name="id"></param>
         public async Task Delete(int id)
@@ -71,7 +70,7 @@ namespace Note.Core.Service
             }
         }
         /// <summary>
-        /// Обновить песню
+        /// Обновить 
         /// </summary>
         /// <param name="notes"></param>
         public async Task Update(UpdateNotesDTO notes)

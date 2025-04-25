@@ -4,12 +4,12 @@ namespace Note.Core.Entity
 {
 
     /// <summary>
-    /// Класс фильма. 
+   
     /// >>Здесь представлен так называемый Primary конструктор(Доступен с .NET8) 
     /// с необязательным параметром title<<
     /// </summary>
-    /// <param name="id">Уникальный идентификатор фильма</param>
-    /// <param name="title">Название фильма</param>
+    /// <param name="id">Уникальный идентификатор </param>
+    /// <param name="title">Название</param>
     public class NoteEntity
     {
         public static int _id_counter = 0;

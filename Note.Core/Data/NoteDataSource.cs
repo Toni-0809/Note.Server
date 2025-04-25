@@ -7,7 +7,7 @@ namespace Note.Core.Data
 {
 
     /// <summary>
-    /// Класс для доступа к данным о фильмах
+    /// Класс для доступа к данным
     /// </summary>
     public class NoteDataSource
     {
